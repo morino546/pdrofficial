@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>طلب العطر</title>
+  <style>
+    body {
+      background-color: #3F4159;
+      color: #FFD700;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .container {
+      max-width: 500px;
+      margin: auto;
+      border: 2px solid #FFD700;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #2F3045;
+    }
+    .btn {
+      background-color: #FFD700;
+      color: #3F4159;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    // عند تقديم النموذج
+    document.getElementById("orderForm").addEventListener("submit", function(e) {
+      e.preventDefault();  // منع إرسال النموذج بشكل طبيعي
+      window.location.href = "confirmation.html";  // الانتقال إلى صفحة التأكيد
+    });
+  </script>
+
+</body>
+</html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>طلب عطر</title>
+  <style>
+    body {
+      background-color: #0A0E1A;
+      color: #FFD700;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .container {
+      max-width: 500px;
+      margin: auto;
+      border: 2px solid #FFD700;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #0A0E1A;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+    }
+    .price-display {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+    .btn {
+      background-color: #FFD700;
+      color: #0A0E1A;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+ <div style="text-align: center; margin-bottom: 20px;">
+  <a href="index.html">
+    <img src="https://i.postimg.cc/qv6q9qFb/50d5ee04-df36-4115-9b57-573653813192.png" alt="شعار المتجر" style="width: 200px; border-radius: 10px;">
+  </a>
+</div>
+  <div class="container">
+    <h2 style="text-align:center">نموذج الطلب</h2>
+
+    <!-- ✅ نموذج الإرسال -->
+      <form action="https://usebasin.com/f/9bafdd98f00f" method="POST">
+       
+      <label>🧴 اسم العطر</label>
+      <input type="text" id="productName" readonly style="background-color:#eee; color:#000;">
+      <input type="hidden" name="product_name" id="productNameHidden">
+
+      <label>👤 الاسم واللقب</label>
+      <input type="text" name="fullname" required>
+
+      <label>📱 رقم الهاتف</label>
+      <input type="text" name="phone" required>
+
+      <label>📍 الولاية</label>
+      <select id="wilayaSelect" name="wilaya" required>
+        <option value="">اختر ولايتك</option>
+      </select>
+
+      <label>🏘️ البلدية</label>
+      <select id="communeSelect" name="commune" required>
+        <option value="">اختر بلديتك</option>
+      </select>
+
+      <label>📦 العنوان الكامل</label>
+      <input type="text" name="address" required>
+
+      <label>💧 السعة</label>
+      <select id="capacitySelect" name="capacity" required>
+        <option value="">اختر السعة</option>
+        <option value="10">10 مل</option>
+        <option value="20">20 مل</option>
+        <option value="30">30 مل</option>
+        <option value="40">40 مل</option>
+      </select>
+
+      <div class="price-display">💰 سعر العطر: <span id="productPrice">--</span> دج</div>
+      <div class="price-display">🚚 سعر الشحن: <span id="shippingPrice">--</span> دج</div>
+      <div class="price-display"><strong>📊 السعر الإجمالي: <span id="totalPrice">--</span> دج</strong></div>
+
+      <!-- ✅ قيم يتم إرسالها في الإيميل -->
+      <input type="hidden" name="product_price" id="productPriceInput">
+      <input type="hidden" name="shipping_price" id="shippingPriceInput">
+      <input type="hidden" name="total_price" id="totalPriceInput">
+  <button type="submit">تأكيد الطلب</button>
+</form>
+    
+  </div>
+
+  <script>
+    function getQueryParam(name) {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(name) || "";
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const productName = getQueryParam("product");
+  const productImage = getQueryParam("image");
+
+  // عرض اسم العطر
+  document.getElementById("productName").value = productName;
+  document.getElementById("productNameHidden").value = productName;
+
+  // عرض صورة العطر
+  const imageElement = document.getElementById("productImage");
+  if (productImage) {
+    imageElement.src = productImage;
+    imageElement.style.display = "block";
+   }
+});
+    // ✅ استخراج اسم العطر من الرابط
+    function getProductNameFromURL() {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get("product") || "";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const productName = getProductNameFromURL();
+      document.getElementById("productName").value = productName;
+      document.getElementById("productNameHidden").value = productName;
+    });
+
+    // ✅ بيانات الشحن والأسعار
+    const shippingPrices = {
+      "01": 400, "02": 450, "03": 500, "04": 550, "05": 600, "06": 650,
+      "07": 700, "08": 750, "09": 800, "10": 850, "11": 900, "12": 950,
+      "13": 1000, "14": 1050, "15": 1100, "16": 1150, "17": 1200, "18": 1250,
+      "19": 1300, "20": 1350, "21": 1400, "22": 1450, "23": 1500, "24": 1550,
+      "25": 1600, "26": 1650, "27": 1700, "28": 1750, "29": 1800, "30": 1850,
+      "31": 1900, "32": 1950, "33": 2000, "34": 2050, "35": 2100, "36": 2150,
+      "37": 2200, "38": 2250, "39": 2300, "40": 2350, "41": 2400, "42": 2450,
+      "43": 2500, "44": 2550, "45": 2600, "46": 2650, "47": 2700, "48": 2750,
+      "49": 2800, "50": 2850, "51": 2900, "52": 2950, "53": 3000, "54": 3050,
+      "55": 3100, "56": 3150, "57": 3200, "58": 3250
+    };
+
+    const productPrices = { "10": 1500, "20": 2500, "30": 3200, "40": 5000 };
+const wilayaSelect = document.getElementById("wilayaSelect");
+    const communeSelect = document.getElementById("communeSelect");
+    const capacitySelect = document.getElementById("capacitySelect");
+
+    const productPriceSpan = document.getElementById("productPrice");
+    const shippingPriceSpan = document.getElementById("shippingPrice");
+    const totalPriceSpan = document.getElementById("totalPrice");
+
+    const productInput = document.getElementById("productPriceInput");
+    const shippingInput = document.getElementById("shippingPriceInput");
+    const totalInput = document.getElementById("totalPriceInput");
+
+    fetch("algeria_cities.json")
+      .then(res => res.json())
+      .then(data => {
+        const uniqueWilayas = [...new Map(data.map(item =>
+          [item.wilaya_code, item.wilaya_name]
+        ))];
+
+        uniqueWilayas.forEach(([code, name]) => {
+          const opt = document.createElement("option");
+          opt.value = code;
+          opt.textContent = name;
+          wilayaSelect.appendChild(opt);
+        });
+
+        wilayaSelect.addEventListener("change", () => {
+          communeSelect.innerHTML = '<option value="">اختر بلديتك</option>';
+          const selectedCode = wilayaSelect.value;
+          const filtered = data.filter(item => item.wilaya_code === selectedCode);
+          filtered.forEach(item => {
+            const opt = document.createElement("option");
+            opt.textContent = item.commune_name;
+            communeSelect.appendChild(opt);
+          });
+          updatePrices();
+        });
+
+        capacitySelect.addEventListener("change", updatePrices);
+      });
+
+    function updatePrices() {
+      const size = capacitySelect.value;
+      const wilayaCode = wilayaSelect.value;
+      const product = productPrices[size] || 0;
+      const shipping = shippingPrices[wilayaCode] || 0;
+      const total = product + shipping;
+
+      productPriceSpan.textContent = product + "";
+      shippingPriceSpan.textContent = shipping + " ";
+      totalPriceSpan.textContent = total + " ";
+
+      productInput.value = product;
+      shippingInput.value = shipping;
+      totalInput.value = total;
+    }
+    </script>
+  <script>
+  function getQueryParam(name) {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(name) || "";
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const productName = getQueryParam("product");
+  const productImage = getQueryParam("image");
+
+  // عرض اسم العطر
+  document.getElementById("productName").value = productName;
+  document.getElementById("productNameHidden").value = productName;
+
+  // عرض صورة العطر
+  const imageElement = document.getElementById("productImage");
+  if (productImage) {
+    imageElement.src = productImage;
+    imageElement.style.display = "block";
+   }
+});
+<div id="confirmationMessage" style="display: none; text-align: center; margin-top: 20px;">
+  <h2 style="color: green;">✔ تم تأكيد طلبك</h2>
+  <p>سيتم الاتصال بك في أقرب وقت</p>
+</div>
+</script>
+<script>
+  document.getElementById('orderForm').addEventListener('submit', function(e) {
+    e.preventDefault(); // يمنع إعادة تحميل الصفحة
+
+    const form = e.target;
+    const formData = new FormData(form);
+
+    fetch('https://usebasin.com/f/9bafdd98f00f', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => {
+      if (response.ok) {
+        // إخفاء النموذج، إظهار رسالة التأكيد
+        form.style.display = 'none';
+        document.getElementById('confirmationMessage').style.display = 'block';
+
+        // الرجوع تلقائياً إلى index.html بعد 3 ثوانٍ
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 3000);
+      } else {
+        alert('حدث خطأ أثناء إرسال الطلب، حاول مرة أخرى.');
+      }
+    })
+    .catch(error => {
+      alert('فشل الاتصال بالخادم.');
+    });
+  });
+</script>
+</body>
+</html>
