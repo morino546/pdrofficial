@@ -1,0 +1,33 @@
+/* responsive.css */
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* الصور والفيديوهات تتناسب مع الشاشة */
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* media query للهاتف */
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+    background-color: #f9f9f9;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+
+  p {
+    font-size: 16px;
+  }
+}
